@@ -1,0 +1,160 @@
+---
+title: "Campaigns Overview"
+icon: "bullhorn"
+description: "Create and manage call, WhatsApp, and SMS campaigns to reach leads at scale"
+---
+
+Campaigns automate outreach to many leads on one channel: **phone calls**, **WhatsApp templates**, or **SMS** (when enabled). Configure schedule windows, retries, and lead lists once, then start the campaign.
+
+## What is a Campaign?
+
+A campaign contacts a list of leads using your chosen channel. Call campaigns use an OUTBOUND AI assistant; WhatsApp campaigns use an approved template; SMS campaigns use an SMS-capable from-number and message body.
+
+<CardGroup cols={2}>
+  <Card title="Channels" icon="layer-group">
+    **Call, WhatsApp, or SMS**
+    
+    Same lead list workflow — pick the channel when you create the campaign
+  </Card>
+
+  <Card title="Lead Management" icon="users">
+    **Import or add leads**
+    
+    CSV, integrations, API, or manual entry. Secondary contacts are for call campaigns only.
+  </Card>
+  
+  <Card title="Schedule windows" icon="calendar">
+    **One or more daily intervals**
+    
+    Overnight windows (e.g. 16:00→02:00) and optional scheduled auto-start
+  </Card>
+  
+  <Card title="Retries & fallback" icon="repeat">
+    **Retries per lead**
+    
+    Call campaigns can also send a WhatsApp/SMS follow-up after max retries
+  </Card>
+</CardGroup>
+
+## Campaign Status
+
+<AccordionGroup>
+  <Accordion title="Draft" icon="file">
+    Campaign is being configured but not yet active. Add leads and configure settings.
+  </Accordion>
+  
+  <Accordion title="In Progress" icon="play">
+    Campaign is actively making calls according to your schedule and retry settings.
+  </Accordion>
+  
+  <Accordion title="Paused" icon="pause">
+    Campaign is temporarily stopped. Can be resumed without losing progress.
+  </Accordion>
+  
+  <Accordion title="Completed" icon="check">
+    All leads have been successfully contacted or marked complete.
+  </Accordion>
+</AccordionGroup>
+
+## Key Features
+
+### Scheduling & Timing
+- **Schedule windows:** One or more daily `{start, end}` intervals (preferred over a single start/end pair)
+- **Overnight windows:** End earlier than start (e.g. 16:00→02:00) is supported
+- **Allowed days + timezone:** Campaign timezone controls when the window applies
+- **Scheduled start:** Optionally auto-start at a future datetime
+
+### Call campaigns
+- OUTBOUND assistant + from-numbers
+- **Max parallel calls** (plan-bounded)
+- **Retry on voicemail** / **retry until goal** (boolean [post-call variables](/ai-assistants/settings/post-call-actions#post-call-variables))
+- Optional **WhatsApp/SMS fallback** after max call retries (low chat credits skip the fallback — they do not pause the voice campaign)
+
+### WhatsApp campaigns
+- Sender + approved template + variable mapping
+- **`messages_per_minute`** (1–10) per campaign
+- **User-wide pool of 10** in-flight WhatsApp sends across all your active WhatsApp campaigns
+
+### SMS campaigns
+- SMS-capable from-number + body (`{{variable}}` placeholders)
+- May be temporarily unavailable on the platform — start will fail with a clear message if disabled
+
+### Lead Types
+- **Primary leads:** Main contacts imported or added to campaign
+- **Secondary contacts:** Call campaigns only — extra numbers to try
+- **Lead status tracking:** Monitor progress and outcomes
+
+## Requirements
+
+Before starting a campaign:
+
+<Warning>
+**Call campaigns:** Your assistant must have a [phone number configured](/ai-assistants/settings/general#phone-number-configuration) for outbound calls.
+</Warning>
+
+- **Channel config ready** — assistant (call), WhatsApp sender+template, or SMS number+body
+- **Sufficient balance** — minutes for calls; chat credits for WhatsApp
+- **Leads added** with valid phone numbers (E.164 recommended)
+
+## Quick Start
+
+1. **Create Campaign:** Choose channel (call / WhatsApp / SMS) and required config
+2. **Set Schedule:** Define schedule windows and allowed days
+3. **Configure Retries:** Set retry attempts and intervals
+4. **Add Leads:** Import from CSV or add manually
+5. **Start Campaign:** Start when ready — sending/dialing begins on the next scheduler cycle
+
+<Note>
+For detailed setup instructions, see [Creating a Campaign](/campaigns/creating-campaigns).
+</Note>
+
+## Campaign Monitoring
+
+### Lead Status Tracking
+Monitor individual lead progress through the campaign:
+- **Created:** Ready to be called
+- **Scheduled:** Queued for next call attempt
+- **Processing:** Currently being called
+- **Completed:** Successfully contacted or goal achieved
+- **Rescheduled:** Scheduled for retry attempt
+- **Max Retries:** Reached maximum retry attempts
+
+**Manual lead management:** You can change lead status in the leads table:
+- **Set to "Created":** Reset lead to be called again
+- **Set to "Completed":** Mark lead as finished to stop calling
+
+### Call Results
+Individual call outcomes with detailed status:
+- **Initiated:** Call started
+- **Ringing:** Phone is ringing
+- **In Progress:** Call connected and active
+- **Completed:** Call finished successfully
+- **Busy:** Line was busy
+- **Unanswered:** No one answered
+- **Failed:** Technical issue prevented call
+
+## Troubleshooting
+
+**Campaign won't start:**
+- Check if assistant has phone number configured
+- Verify sufficient account balance
+- Ensure leads are added to campaign
+
+**No calls being made:**
+- Wait 10-15 minutes after starting - campaigns take time to initialize
+- Check if current time is within allowed calling hours
+- Verify allowed days include current day
+- Confirm leads have valid phone numbers
+
+**Too many/few retries:**
+- Adjust max retries setting (1-5 attempts)
+- Modify retry interval (10-4320 minutes)
+- Review retry conditions (voicemail, goal completion)
+
+<Tip>
+**Best Practice:** Start with conservative retry settings and adjust based on campaign performance and customer feedback.
+</Tip>
+
+<Note>
+For detailed troubleshooting guidance, see [Campaign Troubleshooting](/troubleshooting/campaigns).
+</Note>

@@ -1,0 +1,43 @@
+---
+title: "Update campaign status"
+api: "POST /user/campaigns/update-status"
+description: "Start or stop a call, WhatsApp, or SMS campaign"
+---
+
+Start or stop a campaign you own. Starting validates channel config (assistant / WhatsApp template / SMS number), schedule, and balance. Disabled channels (for example SMS when temporarily unavailable) cannot be started.
+
+### Request body
+
+<ParamField body="campaign_id" type="integer" required>
+  The ID of the campaign to update
+</ParamField>
+
+<ParamField body="action" type="string" required>
+  `start` or `stop`
+</ParamField>
+
+### Response
+
+<ResponseField name="message" type="string" default="Campaign started successfully.">
+  Human-readable outcome
+</ResponseField>
+
+<ResponseField name="success" type="boolean" default="true">
+  Whether the operation succeeded
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  <Expandable title="data properties">
+    <ResponseField name="campaign_id" type="integer">
+      Campaign ID
+    </ResponseField>
+    
+    <ResponseField name="status" type="string" default="in-progress">
+      New status (e.g. `in-progress`, `paused`)
+    </ResponseField>
+
+    <ResponseField name="channel" type="string">
+      `call`, `whatsapp`, or `sms`
+    </ResponseField>
+  </Expandable>
+</ResponseField>

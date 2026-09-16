@@ -1,0 +1,161 @@
+---
+title: "Creating a Campaign"
+icon: "plus"
+description: "Step-by-step guide to setting up call, WhatsApp, or SMS campaigns"
+---
+
+Create and configure a campaign to reach many leads on phone, WhatsApp, or SMS.
+
+## Prerequisites
+
+Depends on the channel:
+- **Call:** OUTBOUND assistant with a phone number, minutes balance
+- **WhatsApp:** Connected sender + approved template, chat credits
+- **SMS:** SMS-capable from-number (SMS campaigns may be temporarily unavailable)
+- **Leads ready** to import or add manually
+
+## Campaign Setup
+
+### 1. Basic Information
+
+**Campaign Name:** Descriptive name for easy identification  
+**Channel:** `Call`, `WhatsApp`, or `SMS`  
+**Call only — Assistant:** Which OUTBOUND AI assistant will dial
+
+<Note>
+For call campaigns, the assistant's voice, prompt, and tools are used on every dial. WhatsApp campaigns send templates; they do not need an outbound assistant.
+</Note>
+
+### 2. Scheduling Configuration
+
+#### Schedule windows
+Prefer **one or more daily windows** (`start` / `end` as HH:MM):
+- Multiple intervals allowed (e.g. 09:00–12:00 and 14:00–18:00)
+- Overnight windows when end is earlier than start (e.g. 16:00→02:00)
+- Optional **scheduled start** datetime to auto-start later
+
+Legacy single start/end times still work and map to one window.
+
+#### Allowed Days
+Select which days of the week to send/call:
+- **Default:** Monday through Sunday
+- **Business only:** Monday through Friday
+- **Custom:** Choose specific days
+
+<Tip>
+**Recommendation:** For business outreach, use Monday–Friday daytime windows in the prospect's timezone.
+</Tip>
+
+### 3. Retry Settings
+
+#### Basic Retry Options
+- **Max retries:** 1-5 attempts for unanswered calls (default: 3)
+- **Retry interval:** 10-4320 minutes between attempts (default: 60 minutes)
+
+#### Advanced Retry Conditions
+
+**Retry on Voicemail:**
+- **Enabled:** Continue calling until human answers
+- **Disabled:** Count voicemail as attempted contact
+
+**Retry Until Goal Completed:**
+- **Enabled:** Keep calling until objective is achieved
+- **Goal variable:** Select boolean variable from assistant's post-call schema
+- **Use case:** Sales calls, appointment booking, lead qualification
+
+<Warning>
+**Goal-based retry** requires your assistant to have post-call variables configured with boolean fields (true/false).
+</Warning>
+
+### 4. Lead Management
+
+#### Adding Leads
+
+**Manual Entry:**
+- Add individual leads with phone numbers
+- Include names and additional contact information
+
+**CSV Import:**
+- Upload spreadsheet with lead information
+- Required: Phone number column
+- Optional: Name, email, additional fields
+
+**Integration Import:**
+- Import from GoHighLevel, Google Sheets, or other connected platforms
+- Automatic sync with external lead sources
+
+#### Secondary Contacts
+Call campaigns only — additional phone numbers for the same lead:
+- **Use case:** Multiple decision-makers, backup contacts
+- **Logic:** Campaign tries secondary numbers if the primary does not connect
+- **Not available** on WhatsApp/SMS campaigns
+
+### 5. WhatsApp / SMS (text channels)
+
+**WhatsApp**
+- Select sender + approved template
+- Map template placeholders to lead variables
+- Set **messages per minute** (1–10). Across all your active WhatsApp campaigns, at most **10** sends are in flight at once.
+
+**SMS**
+- Select SMS-capable from-number and message body (`{{variable}}` placeholders)
+- Rate via messages per minute
+
+**Call → text fallback (call campaigns)**
+- After a lead hits max call retries, optionally send a WhatsApp template or SMS once
+- Missing chat credits skip that fallback send; the call campaign keeps dialing other leads
+
+## Starting Your Campaign
+
+### Pre-launch Checklist
+- [ ] Channel config complete (assistant / WhatsApp template / SMS number)
+- [ ] Sufficient balance (minutes and/or chat credits)
+- [ ] Leads added with valid phone numbers
+- [ ] Schedule windows and days set
+- [ ] Retry (and optional fallback) match your goals
+
+### Launch Process
+1. **Review settings** one final time
+2. **Click "Start Campaign"** to begin
+3. **Monitor progress** in campaign dashboard
+4. **Adjust settings** if needed (pause campaign first)
+
+## Campaign Monitoring
+
+### Real-time Status
+- **Calls in progress:** Currently active calls
+- **Calls completed:** Finished calls with outcomes
+- **Leads remaining:** Contacts still to be called
+- **Next call time:** When next call will be made
+
+### Monitoring Progress
+Track lead status and call results in the campaign dashboard. See [Campaign Overview](/campaigns/index#campaign-monitoring) for detailed status explanations.
+
+## Managing Active Campaigns
+
+### Pausing a Campaign
+- **Immediate stop:** Current call completes, no new calls start
+- **Resume capability:** Can restart without losing progress
+- **Use cases:** Adjust settings, review results, temporary pause
+
+### Modifying Settings
+1. **Pause the campaign** first
+2. **Edit configuration** as needed
+3. **Save changes**
+4. **Resume campaign** to continue with new settings
+
+### Adding More Leads
+- **Add to active campaign:** New leads join existing retry queue
+- **Import additional contacts:** CSV or integration import
+- **Secondary contacts:** Add backup numbers for existing leads
+
+## Best Practices
+
+- **Conservative scheduling:** Business hours, respect time zones
+- **Start with 2-3 retries:** Monitor and adjust based on feedback
+- **Clean lead data:** Valid numbers, remove duplicates
+- **Compliance:** Follow local regulations and opt-out requests
+
+<Note>
+For troubleshooting common issues, see [Campaign Troubleshooting](/troubleshooting/campaigns).
+</Note>
