@@ -1,2 +1,10 @@
 .DS_Store
 **/.DS_Store
+
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
